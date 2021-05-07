@@ -16,6 +16,8 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    // eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'no-shadow': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/no-absolute-path': 'off',
