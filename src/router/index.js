@@ -25,12 +25,12 @@ Vue.use(Router)
   }
  */
 
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantRoutes = [
+  {
+    path: '/',
+    redirect: '/case',
+    hidden: true
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -41,18 +41,42 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
-  },
+  }
+]
 
+export const asyncRoutes = [
   {
-    path: '/',
+    path: '/case',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/Case/discover',
+    alwaysShow: true, // will always show the root menu
+    name: 'Case',
+    meta: {
+      title: '案件管理',
+      icon: 'dashboard',
+      roles: ['admin'] // you can set roles in root nav
+    },
     children: [
       {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Dashboard', icon: 'dashboard' }
+        redirect: '/case/discover/index',
+        path: 'discover',
+        name: 'Discover',
+        alwaysShow: true,
+        meta: {
+          title: '案件发现',
+          roles: ['admin']
+        },
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/discover/index'),
+            name: 'Index',
+            meta: {
+              title: '待受理',
+              roles: ['admin']
+            }
+          }
+        ]
       }
     ]
   },

@@ -15,11 +15,11 @@ export function logout() {
   })
 }
 
-export function loginByToken(data) {
+export function loginByToken({ params }) {
   return request({
-    url: '/web/users/get-token',
-    method: 'post',
-    data
+    url: '/web/users/login-by-token',
+    method: 'get',
+    params
   })
 }
 

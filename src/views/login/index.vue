@@ -5,13 +5,12 @@
       <el-form
         ref="loginForm"
         :model="loginForm"
-        style="padding-left: 20px"
         :rules="rules"
         class="login-form"
         label-width="80px"
       >
-        <p class="title" style="padding-right: 30px">案件管理子系统</p>
-        <p class="error" style="padding-right: 30px">{{ loginError }}</p>
+        <p class="title">案件管理子系统</p>
+        <p class="error">{{ loginError }}</p>
         <el-form-item label="账号" prop="username">
           <el-input
             v-model="loginForm.username"
@@ -35,25 +34,16 @@
           <el-checkbox v-model="rememberPsd">记住密码</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button
-            style="width: 400px; margin-top: 5vh; background: #2aa98b"
-            :loading="loading"
-            type="primary"
-            @click="login"
+          <el-button :loading="loading" type="primary" class="login-btn" @click="loginIn"
             >登录</el-button
           >
         </el-form-item>
       </el-form>
-      <div class="bottom">
-        <!-- <img src="./login_bg.png"
-        alt />-->
-      </div>
+      <div class="bottom"></div>
     </div>
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
-import { login, loginByToken } from '@/api/login'
 import Storage from 'good-storage'
 
 export default {
@@ -61,7 +51,6 @@ export default {
   components: {},
   data() {
     return {
-      url: process.env.VUE_APP_ASSET_URL,
       year: new Date().getFullYear(),
       loading: false,
       rememberPsd: false,
@@ -78,81 +67,41 @@ export default {
           { min: 6, message: '请输入最少6位的密码' }
         ]
       },
-      loginError: ''
+      loginError: '',
+      redirect: undefined
     }
   },
-  // computed: {
-  //   ...mapGetters(["user"])
-  // },
+  watch: {
+    $route: {
+      handler(route) {
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
+    }
+  },
+  mounted() {
+    this.rememberPsd = Storage.get('isRemeberPsd')
+    this.loginInfo = Storage.get('loginInfo')
+    if (this.rememberPsd) {
+      this.loginForm.username = this.loginInfo.username
+      this.loginForm.password = this.loginInfo.password
+    }
+  },
   methods: {
-    removeStorage() {
-      Storage.remove('webToken')
-    },
-    async login() {
-      this.removeStorage()
-      this.setLoginIsSso(false)
+    async loginIn() {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           this.loading = true
           this.notInput = true
-          try {
-            const res = await login(this.loginForm)
-            this.notInput = false
-            if (res.code === 200) {
-              if (res.data.id === Storage.get('userId')) {
-                Storage.remove('checkFilter')
-                Storage.remove('streets')
-                Storage.remove('district')
-                Storage.remove('departments')
-              }
-              Storage.set('loginInfo', this.loginForm)
-              Storage.set('isRemeberPsd', this.rememberPsd)
-              Storage.set('name', res.data.name)
-              Storage.set('userInfor', {
-                district_id: res.data.district_id,
-                district_name: res.data.district,
-                street: res.data.street,
-                street_name: res.data.street_name,
-                department: res.data.department,
-                role: res.data.role,
-                departmentName: res.data.departmentName,
-                name: res.data.name,
-                username: res.data.username,
-                phone: res.data.phone,
-                identity: res.data.identity,
-                grid_centerName: res.data.grid_centerName
-              })
-              const { token } = res.data
-              const { rights } = res.data
-              const { selectLevel } = res.data
-              if (token) {
-                loginByToken({ token }).then((res2) => {
-                  this.loading = false
-                  if (!res2.message) {
-                    const res3 = res2
-                    res3.userToken = token
-                    res3.rights = rights
-                    res3.rights = rights
-                    res3.selectLevel = selectLevel
-                    this.setUser(res3)
-                    this.$router.push('/')
-                    if (res3.rights && res3.rights.length === 0) {
-                      this.$message.info('账号没有任何权限，无法成功登录')
-                    }
-                  } else {
-                    return false
-                  }
-                  return false
-                })
-              }
-            } else {
+          this.$store
+            .dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/' })
               this.loading = false
-              this.$message.error(`${res.msg || res.message}`)
-              return
-            }
-          } finally {
-            this.notInput = false
-          }
+            })
+            .catch(() => {
+              this.loading = false
+            })
         } else {
           this.notInput = false
         }
@@ -164,15 +113,6 @@ export default {
       } else {
         this.loginForm.password = ''
       }
-    },
-    ...mapMutations(['setUser', 'setLoginIsSso'])
-  },
-  mounted() {
-    this.rememberPsd = Storage.get('isRemeberPsd')
-    this.loginInfo = Storage.get('loginInfo')
-    if (this.rememberPsd) {
-      this.loginForm.username = this.loginInfo.username
-      this.loginForm.password = this.loginInfo.password
     }
   }
 }
@@ -187,6 +127,7 @@ export default {
 }
 
 .login-form {
+  padding-left: 20px;
   width: 600px;
   height: 400px;
 }
@@ -207,6 +148,7 @@ export default {
   font-size: 36px;
   color: #0071ff;
   line-height: 64px;
+  padding-right: 30px;
 }
 
 .text-right {
@@ -217,7 +159,7 @@ export default {
   color: #f56c6c;
   font-size: 12px;
   line-height: 1;
-  padding-top: 4px;
+  padding: 4px 30px 0 0;
 }
 
 .right {
@@ -232,15 +174,10 @@ export default {
   background: #f6f6f6;
 }
 
-.el-button {
-  width: 100%;
-}
-
-.svg {
-  position: absolute;
-  width: 24px;
-  left: 2px;
-  top: 4px;
+.login-btn {
+  width: 400px;
+  margin-top: 5vh;
+  background: #2aa98b;
 }
 
 .bottom {
@@ -252,9 +189,5 @@ export default {
   background-size: 100% 100%;
   left: 0;
   z-index: -1;
-  // img {
-  // width: 100%;
-  // height: 100%;
-  // }
 }
 </style>

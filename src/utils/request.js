@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import Storage from 'good-storage'
 import router from '@/router/index'
+import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -14,7 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
-    const token = Storage.get('webToken')
+    const token = getToken()
     if (token) {
       config.params = { ...config.params, token }
     }

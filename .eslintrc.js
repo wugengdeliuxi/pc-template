@@ -16,7 +16,10 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    // eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'no-restricted-syntax': 'off',
+    'prefer-destructuring': 'off',
+    eqeqeq: 'off',
+    'consistent-return': 'off',
     'no-shadow': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
