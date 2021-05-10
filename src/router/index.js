@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 /* Layout */
 import Layout from '@/layout'
+import two from '@/layout/two' // 为了嵌套路由
 
 Vue.use(Router)
 
@@ -48,7 +49,7 @@ export const asyncRoutes = [
   {
     path: '/case',
     component: Layout,
-    redirect: '/Case/discover',
+    redirect: '/case/discover/index',
     alwaysShow: true, // will always show the root menu
     name: 'Case',
     meta: {
@@ -60,6 +61,7 @@ export const asyncRoutes = [
       {
         redirect: '/case/discover/index',
         path: 'discover',
+        component: two, // Parent router-view
         name: 'Discover',
         alwaysShow: true,
         meta: {
@@ -73,6 +75,28 @@ export const asyncRoutes = [
             name: 'Index',
             meta: {
               title: '待受理',
+              roles: ['admin']
+            }
+          }
+        ]
+      },
+      {
+        redirect: '/case/confirm/index',
+        path: 'confirm',
+        component: two, // Parent router-view
+        name: 'Confirm',
+        alwaysShow: true,
+        meta: {
+          title: '案件立案',
+          roles: ['admin']
+        },
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/confirm/index'),
+            name: 'Index',
+            meta: {
+              title: '待立案',
               roles: ['admin']
             }
           }

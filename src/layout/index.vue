@@ -75,6 +75,9 @@ export default {
     position: fixed;
     top: 0;
   }
+  .main-container {
+    background: $bgcolor;
+  }
 }
 
 .drawer-bg {
