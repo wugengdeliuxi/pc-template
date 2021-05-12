@@ -46,6 +46,12 @@
         </el-dropdown-menu>
       </el-dropdown> -->
       <el-button
+        type="text"
+        icon="el-icon-setting"
+        class="right-menu-item hover-effect"
+        @click="settingVisible = true"
+      />
+      <el-button
         class="right-menu-item hover-effect"
         type="text"
         icon="el-icon-switch-button"
