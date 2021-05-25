@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'pc Template',
+  title: '指标平台管理系统',
 
   /**
    * @type {boolean} true | false

@@ -16,6 +16,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'no-continue': 'off',
     'no-restricted-syntax': 'off',
     'prefer-destructuring': 'off',
     eqeqeq: 'off',

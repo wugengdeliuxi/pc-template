@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 /* Layout */
 import Layout from '@/layout'
-import two from '@/layout/two' // 为了嵌套路由
+// import two from '@/layout/two' // 为了嵌套路由
 
 Vue.use(Router)
 
@@ -29,7 +29,7 @@ Vue.use(Router)
 export const constantRoutes = [
   {
     path: '/',
-    redirect: '/case',
+    redirect: '/source',
     hidden: true
   },
   {
@@ -47,64 +47,90 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
-    path: '/case',
+    path: '/source',
     component: Layout,
-    redirect: '/case/discover/index',
-    alwaysShow: true, // will always show the root menu
-    name: 'Case',
-    meta: {
-      title: '案件管理',
-      icon: 'dashboard',
-      roles: ['admin'] // you can set roles in root nav
-    },
+    redirect: '/source/index',
     children: [
       {
-        redirect: '/case/discover/index',
-        path: 'discover',
-        component: two, // Parent router-view
-        name: 'Discover',
-        alwaysShow: true,
+        path: 'index',
+        component: () => import('@/views/source/index'),
+        name: 'Source',
         meta: {
-          title: '案件发现',
-          roles: ['admin']
-        },
-        children: [
-          {
-            path: 'index',
-            component: () => import('@/views/discover/index'),
-            name: 'Index',
-            meta: {
-              title: '待受理',
-              roles: ['admin']
-            }
-          }
-        ]
-      },
-      {
-        redirect: '/case/confirm/index',
-        path: 'confirm',
-        component: two, // Parent router-view
-        name: 'Confirm',
-        alwaysShow: true,
-        meta: {
-          title: '案件立案',
-          roles: ['admin']
-        },
-        children: [
-          {
-            path: 'index',
-            component: () => import('@/views/confirm/index'),
-            name: 'Index',
-            meta: {
-              title: '待立案',
-              roles: ['admin']
-            }
-          }
-        ]
+          title: '数据源管理',
+          icon: 'source',
+          roles: ['admin'] // you can set roles in root nav
+        }
       }
     ]
   },
-
+  {
+    path: '/quota',
+    component: Layout,
+    redirect: '/quota/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/quota/index'),
+        name: 'Quota',
+        meta: {
+          title: '指标管理',
+          icon: 'quota',
+          roles: ['admin'] // you can set roles in root nav
+        }
+      }
+    ]
+  },
+  {
+    path: '/theme-table',
+    component: Layout,
+    redirect: '/theme-table/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/theme-table/index'),
+        name: 'ThemeTable',
+        meta: {
+          title: '主题表管理',
+          icon: 'table',
+          roles: ['admin'] // you can set roles in root nav
+        }
+      }
+    ]
+  },
+  {
+    path: '/solidify',
+    component: Layout,
+    redirect: '/solidify/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/solidify/index'),
+        name: 'Solidify',
+        meta: {
+          title: '固化管理',
+          icon: 'solidify',
+          roles: ['admin'] // you can set roles in root nav
+        }
+      }
+    ]
+  },
+  {
+    path: '/quota-spec',
+    component: Layout,
+    redirect: '/quota-spec/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/quota-spec/index'),
+        name: 'QuotaSpec',
+        meta: {
+          title: '指标配置管理',
+          icon: 'quota-spec',
+          roles: ['admin'] // you can set roles in root nav
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

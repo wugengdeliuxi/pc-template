@@ -64,7 +64,7 @@
 <script>
 import { mapGetters } from 'vuex'
 // import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import Hamburger from '@/components/Base/Hamburger'
 // import ErrorLog from '@/components/ErrorLog'
 // import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
@@ -95,14 +95,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
-
 .navbar {
   height: 50px;
   overflow: hidden;
   position: relative;
   background: $blue;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0px 2px 8px 0px rgba(4, 25, 47, 0.3);
 
   .hamburger-container {
     line-height: 46px;

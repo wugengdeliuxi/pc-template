@@ -3,7 +3,7 @@
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <!-- <img v-if="logo" :src="logo" class="sidebar-logo" /> -->
-        <h1 class="sidebar-title">{{ title }}</h1>
+        <h1 class="sidebar-title">{{ title.substr(0, 2) }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <!-- <img v-if="logo" :src="logo" class="sidebar-logo" /> -->
@@ -24,16 +24,14 @@ export default {
   },
   data() {
     return {
-      title: '城运PC模板',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: '指标平台管理系统'
+      // logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
-
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }

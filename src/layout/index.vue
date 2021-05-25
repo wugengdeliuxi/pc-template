@@ -11,6 +11,7 @@
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
+      <breadcrumb />
       <app-main />
     </div>
   </div>
@@ -18,6 +19,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Breadcrumb from '@/components/Base/Breadcrumb'
 import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
@@ -26,6 +28,7 @@ export default {
   components: {
     AppMain,
     Navbar,
+    Breadcrumb,
     // Settings,
     Sidebar,
     TagsView
@@ -56,9 +59,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
-
 .app-wrapper {
   @include clearfix;
   position: relative;

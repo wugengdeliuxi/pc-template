@@ -5,7 +5,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'pc Template' // page title
+const name = defaultSettings.title || '指标平台管理系统' // page title
 const port = process.env.port || process.env.npm_config_port || 8080 // dev port
 
 module.exports = {
@@ -14,6 +14,17 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  css: {
+    loaderOptions: {
+      sass: {
+        // 全局引入变量和 mixin
+        prependData: `
+          @import "@/styles/variables.scss";
+          @import "@/styles/mixin.scss";
+        `
+      }
+    }
+  },
   devServer: {
     port,
     open: false,
