@@ -47,3 +47,24 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-table__body-wrapper {
+  @include scrollBar
+}
+
+.app-wrapper .el-dialog__body {
+  padding: 15px 0;
+  margin: 0 20px;
+  border-bottom: 1px solid rgba($blue, 0.09);
+  border-top: 1px solid rgba($blue, 0.09);
+}
+
+.app-wrapper .el-dialog__header {
+  .el-dialog__headerbtn {
+    top: 30px;
+    font-size: 22px;
+  }
+}
+.app-wrapper .el-dialog__footer {
+  padding-top: 15px;
+}

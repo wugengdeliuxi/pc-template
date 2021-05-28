@@ -87,13 +87,13 @@ export default {
 .app-breadcrumb.el-breadcrumb {
   font-size: 14px;
   line-height: 50px;
-  margin: 24px 16px 12px 16px;
+  margin: 0 16px 12px 16px;
   padding: 0 16px;
   background: $bgwhite;
   box-shadow: 0px 0px 8px 2px rgba(223, 223, 223, 0.3);
 
   .no-redirect {
-    color: #333;
+    color: $wordcolor2;
     cursor: text;
   }
   .opration {

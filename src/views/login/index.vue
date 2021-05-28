@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <p class="systemTitle">上海市网格化综合管理系统</p>
+    <p class="systemTitle">指标平台</p>
     <div class="right">
       <el-form
         ref="loginForm"
@@ -9,7 +9,7 @@
         class="login-form"
         label-width="80px"
       >
-        <p class="title">案件管理子系统</p>
+        <p class="title">指标平台管理系统</p>
         <p class="error">{{ loginError }}</p>
         <el-form-item label="账号" prop="username">
           <el-input

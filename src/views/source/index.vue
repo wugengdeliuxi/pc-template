@@ -1,7 +1,42 @@
 <template>
   <div class="source">
-    <global-search></global-search>
-    <global-table :table-head="tableHeaders" :table-data="tableData"></global-table>
+    <global-search>
+      <template #operate>
+        <span style="margin-right: 8px">数据源</span>
+        <el-select v-model="dataSource" placeholder="请选择" clearable style="margin-right: 32px">
+          <el-option label="实际解决" value="实际解决" />
+          <el-option label="解释说明" value="解释说明" />
+          <el-option label="参考备案" value="参考备案" />
+        </el-select>
+        <el-button type="primary" @click="newBuild">新建</el-button>
+        <el-button icon="el-icon-delete" style="margin-right: 32px">删除</el-button>
+        <el-input
+          placeholder="根据任务名称和描述筛选"
+          style="width: 200px"
+          suffix-icon="el-icon-search"
+          v-model="filterName"
+        >
+        </el-input>
+      </template>
+    </global-search>
+    <global-table
+      v-loading="loading"
+      :columns="columns"
+      :data="tableData"
+      :total="total"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      @current-change="currentChange"
+      @size-change="sizeChange"
+      @handle-selection-change="selectChange"
+    ></global-table>
+    <global-dialog
+      title="新建数据接口"
+      :visible.sync="visibleDialog"
+      @confirm="handleConfirm"
+      @cancel="visibleDialog = false"
+    >
+    </global-dialog>
   </div>
 </template>
 
@@ -10,45 +45,91 @@ export default {
   name: 'Source',
   data() {
     return {
-      tableHeaders: [
-        { prop: 'code0', label: '案件编号', minwidth: '160px' },
-        { prop: 'code1', label: '案件编号', minwidth: '160px' },
-        { prop: 'code2', label: '案件编号', minwidth: '160px' },
-        { prop: 'code3', label: '案件编号', minwidth: '160px' },
-        { prop: 'code4', label: '案件编号', minwidth: '160px' },
-        { prop: 'code5', label: '案件编号', minwidth: '160px' },
-        { prop: 'code6', label: '案件编号', minwidth: '160px' }
-      ],
-      tableData: [
-        { code0: 111 },
+      columns: Object.freeze([
+        { prop: 'name', label: '名称' },
+        { prop: 'type', label: '类型' },
+        { prop: 'status', label: '状态' },
+        { prop: 'desc', label: '描述' },
         {
-          code1: 111
-        },
-        {
-          code2: 111
-        },
-        {
-          code3: 111
-        },
-        {
-          code4: 111
-        },
-        {
-          code5: 111
-        },
-        {
-          code6: 111
-        },
-        {
-          code1: 111
-        },
-        {
-          code2: 111
-        },
-        {
-          code6: 111
+          label: '操作',
+          width: 100,
+          fixed: 'right',
+          actions: [
+            {
+              id: 'edit',
+              text: '编辑',
+              // 可以通过before控制按钮是否显示，比如下面年龄四十岁的才会显示编辑按钮
+              before(row) {
+                return row.age < 40
+              },
+              click: this.handleEdit
+            },
+            {
+              id: 'delete',
+              text: '删除',
+              icon: 'el-icon-delete',
+              disabled(row) {
+                return row.sex === 0
+              },
+              click: this.handleDelete
+            }
+          ]
         }
-      ]
+      ]),
+      dataSource: '',
+      filterName: '',
+      visibleDialog: false,
+      tableData: [],
+      // 当前页码
+      currentPage: 1,
+      // 每页条数
+      pageSize: 10,
+      // 总条数
+      total: 0,
+      loading: false
+    }
+  },
+  created() {
+    this.loadData()
+  },
+  methods: {
+    // 加载表格数据
+    loadData() {
+      this.loading = true
+      setTimeout(() => {
+        this.total = 40
+        const { currentPage, pageSize } = this
+        this.tableData = new Array(pageSize).fill({}).map((item, index) => {
+          return {
+            name: `指标平台${currentPage + (index + 1) * 10}`,
+            type: Math.random() > 0.5 ? 1 : 0,
+            status: Math.floor(Math.random() * 100),
+            desc: `这是一段描述${Math.floor(Math.random() * 100)}`
+          }
+        })
+        this.loading = false
+      }, 1000)
+    },
+    handleEdit() {
+      console.log('edit')
+    },
+    handleDelete() {
+      console.log('delete')
+    },
+    handleConfirm() {},
+    currentChange(page) {
+      this.currentPage = page
+      this.loadData()
+    },
+    sizeChange(size) {
+      this.pageSize = size
+      this.loadData()
+    },
+    newBuild() {
+      this.visibleDialog = true
+    },
+    selectChange(val) {
+      console.log(val)
     }
   }
 }

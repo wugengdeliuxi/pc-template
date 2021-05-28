@@ -1,10 +1,13 @@
 <template>
   <div class="global-search">
-    <h4>查询条件</h4>
+    <div v-if="isTitle" class="title"><h4>查询条件</h4></div>
     <div class="content">
       <slot name="operate" />
-      <el-button icon="el-icon-delete" size="mini">删除</el-button>
-      <el-button icon="el-icon-upload2" size="mini">导出</el-button>
+      <template v-for="(item, index) in searchData">
+        <el-button v-if="item.type == 'button'" :icon="item.icon" :size="item.size" :key="index">
+          {{ item.title }}
+        </el-button>
+      </template>
     </div>
   </div>
 </template>
@@ -13,7 +16,16 @@
 export default {
   name: 'GlobalSearch',
   components: {},
-  props: {},
+  props: {
+    isTitle: {
+      type: Boolean,
+      default: true
+    },
+    searchData: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {}
   },
@@ -32,8 +44,12 @@ export default {
   padding: 0 16px;
   margin-bottom: 12px;
   box-shadow: 0px 0px 8px 2px rgba(223, 223, 223, 0.3);
+  font-size: 14px;
+  color: $wordcolor2;
+  .title {
+    border-bottom: 1px solid #dbeafa;
+  }
   .content {
-    border-top: 1px solid #dbeafa;
     padding: 20px 0;
   }
 }

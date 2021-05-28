@@ -1,21 +1,22 @@
 // global color
-$blue: #3E5BC5;
+$blue: #3e5bc5; // 目前的主色调 rgba(62, 91, 197, 1)
 $white: #fff;
 $bgcolor: #f5f6fa;
 $bgwhite: #fff;
+$wordcolor1: #2b3642; // 主要用于标题类
+$wordcolor2: #333; // 用于副标题and正文
+$wordcolor3: #424754; // 用于正文
+$wordcolor4: #999999; // 用于非常浅色文字
 
-// sidebar
-$menuText:#424754;
-$menuActiveText:#3E5BC5;
-$subMenuActiveText:#3E5BC5; //https://github.com/ElemeFE/element/issues/12951
-
-$menuBg:#fff;
-$menuHover:rgba(9, 109, 217, .19);
-
-$subMenuBg:#fff;
-$subMenuHover:rgba(9, 109, 217, .19);
+// sidebar相关颜色单独定义一份，便于修改
+$menuText: #424754;
+$menuActiveText: $blue;
+$subMenuActiveText: $blue; //https://github.com/ElemeFE/element/issues/12951
+$menuBg: #fff;
+$menuHover: rgba(62, 91, 197, 0.19);
+$subMenuBg: #fff;
+$subMenuHover: rgba(62, 91, 197, 0.19);
 $subMenuBorder: #eaedf1;
-
 $sideBarWidth: 210px;
 
 // the :export directive is the magic sauce for webpack

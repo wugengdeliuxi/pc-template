@@ -212,18 +212,18 @@
   >.el-menu--popup {
     max-height: 100vh;
     overflow-y: auto;
+    @include scrollBar
+    // &::-webkit-scrollbar-track-piece {
+    //   background: #d3dce6;
+    // }
 
-    &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
-    }
+    // &::-webkit-scrollbar {
+    //   width: 6px;
+    // }
 
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
-      border-radius: 20px;
-    }
+    // &::-webkit-scrollbar-thumb {
+    //   background: #99a9bf;
+    //   border-radius: 20px;
+    // }
   }
 }

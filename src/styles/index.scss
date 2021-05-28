@@ -4,6 +4,7 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './reset.scss';
+@import './element-variables.scss';
 
 body {
   height: 100%;
@@ -66,7 +67,7 @@ h4 {
   font-size: 15px;
   line-height: 40px;
   padding-left: 20px;
-  color: #2B3642;
+  color: $wordcolor1;
   font-weight: bold;
   &::before {
     position: absolute;
@@ -76,7 +77,7 @@ h4 {
     height: 18px;
     content: "";
     margin-right: 8px;
-    background-color: #3E5BC5;
+    background-color: $blue;
   }
 }
 
